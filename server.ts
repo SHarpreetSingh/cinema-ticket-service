@@ -53,6 +53,6 @@ function onError(error: NodeJS.ErrnoException): void {
 
 function onListening(): void {
     const addr = server.address();
-    const bind = typeof addr === 'string' ? `pipe ${addr}` : `Listetning on port ${addr?.port}`;
+    const bind = typeof addr === 'string' ? `pipe ${addr}` : `Listetning on port ${addr?.port} 🚀`;
     console.log(bind);
 }

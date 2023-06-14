@@ -1,30 +1,27 @@
 import express, { Application, Request, Response, Errback, NextFunction, ErrorRequestHandler } from 'express';
-// import bodyParser from 'body-parser';
-// import cors from 'cors';
-// import helmet from 'helmet';
+import bodyParser from 'body-parser';
+import helmet from 'helmet';
 import { Database } from './app/core/database'
-import { userRouter } from './app/routes/cinema.routes'
+import { cinemaRouter } from './app/routes/cinema.routes'
 
 
 export default class Server {
-
     expressInstance: express.Express;
 
     constructor() {
         this.expressInstance = express();
         this.middlewareSetup();
-        // this.routingSetup();
+        this.routingSetup();
         this.connectDatabase()
     }
 
     private middlewareSetup() {
-
         // Setup common security protection
-        // this.expressInstance.use(helmet());
+        this.expressInstance.use(helmet());
 
         // Setup requests format parsing (Only JSON requests will be valid)
-        // this.expressInstance.use(bodyParser.urlencoded({ extended: true }));
-        // this.expressInstance.use(bodyParser.json());
+        this.expressInstance.use(bodyParser.urlencoded({ extended: true }));
+        this.expressInstance.use(bodyParser.json());
     }
 
     private async connectDatabase(): Promise<void> {
@@ -41,28 +38,28 @@ export default class Server {
 
     private routingSetup() {
         // Add to server routes
+        this.expressInstance.use('/api/v1', cinemaRouter);
 
-        this.expressInstance.use('/', userRouter);
-        console.log("expressInstance");
+        // by deafult route
+        this.expressInstance.get('/', (req, res) => {
+            res.send("Welcome 🫰")
+        });
 
         // error handler
         this.expressInstance.use(
             (err: ErrorRequestHandler, req: Request,
                 res: Response, next: () => void) => {
-                console.log("req", req);
+                // console.log("req", req);
 
                 // set locals, only providing error in development
-                // res.locals.message = err.message;
                 res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-                // render the error page
-                // res.status(err.status || 500);
-                res.render('error');
+                // render the error status code
+                res.status(500);
                 console.log(req.method, '\t', req.originalUrl);
                 const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-                console.log(fullUrl);
+                // console.log(fullUrl);
                 next()
-
             });
     }
 }

@@ -1,16 +1,6 @@
 import { connect, Schema } from 'mongoose'
 const ObjectId = Schema.Types.ObjectId
 
-export interface IBaseModel {
-  wasNew?: boolean
-  eventPayload?: Record<string, unknown>
-  isActive: boolean
-  createdAt?: Date
-  updatedAt?: Date
-  _createdBy?: typeof ObjectId
-  _updatedBy?: typeof ObjectId
-}
-
 export class Database {
   private url: string
   private connectionOptions: Record<string, unknown>
@@ -21,7 +11,7 @@ export class Database {
     connectionOptions?: Record<string, unknown>
   }) {
     const {
-      url = 'mongodb://localhost:27017/test',
+      url,
       connectionOptions = {
         useNewUrlParser: true,
         useUnifiedTopology: true,
