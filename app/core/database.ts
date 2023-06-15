@@ -7,8 +7,8 @@ export class Database {
   requestLogDatabaseConnection: any
 
   constructor(options: {
-    url: string | undefined
-    connectionOptions?: Record<string, unknown>
+    url: string | undefined;
+    connectionOptions?: Record<string, unknown>;
   }) {
     const {
       url,
@@ -24,7 +24,10 @@ export class Database {
 
   async connect(): Promise<void> {
     if (this.url) {
-      const mongoose = await connect(this.url.toString(), this.connectionOptions)
+      const mongoose = await connect(
+        this.url.toString(),
+        this.connectionOptions
+      )
       console.log('Database Connected Successfully.')
     }
   }
