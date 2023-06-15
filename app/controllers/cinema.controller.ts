@@ -2,39 +2,47 @@ import { Request, Response } from 'express'
 import { CinemaModel as cinema } from '../models/cinema.model'
 
 export async function CreateCinema(req: Request, res: Response) {
-    console.log('uploads', req.body)
     const { name, seats } = req.body
-    const obj = {
-        name,
-        seats
+    if (!name || !seats) {
+        return res.status(422).json({
+            status: res.statusCode,
+            message: 'Provide cinema name and seats.',
+        })
     }
+
+    const obj = { name, seats }
     const result = await cinema.create(obj)
     if (!result) {
         return res.status(500).json({
             status: res.statusCode,
-            message: 'This cinema not created.',
+            message: 'This cinema is not created.',
         })
     }
 
     // All Done
     return res.status(201).json({
         status: res.statusCode,
-        message: 'Cinema created.',
+        message: 'Cinema created sucessfully.',
         cinemaId: result._id,
         result
     })
 }
 
 export async function PurchaseTicket(req: Request, res: Response) {
-    console.log('req.body', req.body)
     const { name, seatNumber } = req.body
+    if (!name || !seatNumber) {
+        return res.status(422).json({
+            status: res.statusCode,
+            message: 'Provide cinema name and seat number.',
+        })
+    }
 
     if (seatNumber.length === 0) {
         return res.status(422).json({
             message: "Seat number can't be empty.",
         })
-
     }
+
     const result = await cinema.findOne({ name, seatNumber: { $in: seatNumber } })
     console.log('result', result)
 

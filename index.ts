@@ -3,7 +3,8 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import { Database } from './app/core/database'
 import { cinemaRouter } from './app/routes/cinema.routes'
-
+import dotenv from 'dotenv'
+dotenv.config()
 
 export default class Server {
     expressInstance: express.Express;
@@ -26,14 +27,13 @@ export default class Server {
 
     private async connectDatabase(): Promise<void> {
         const database = new Database({
-            url: 'mongodb://127.0.0.1:27017/testMongo',
+            url: process?.env?.DB_URL,
             connectionOptions: {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
             },
         })
         await database.connect()
-        // Global.App.Database = database
     }
 
     private routingSetup() {

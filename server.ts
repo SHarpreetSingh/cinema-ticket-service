@@ -1,7 +1,6 @@
 import http from 'http';
 import expressServer from './index';
-// import dotenv from 'dotenv'
-// dotenv.config()
+
 
 // Normalize port number which will expose server
 const port = normalizePort(process.env.PORT || 3000);

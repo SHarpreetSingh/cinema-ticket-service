@@ -1,5 +1,4 @@
 import { Schema, model as Model } from 'mongoose'
-const ObjectId = Schema.Types.ObjectId
 
 export interface IBaseModel {
     createdAt?: Date

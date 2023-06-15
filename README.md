@@ -1,4 +1,4 @@
-## cinema-ticket-service
+## Node Js server for Cinema Ticket Purchasing Platform Service
 
 ### Step 1
 npm i

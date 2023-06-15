@@ -2,12 +2,12 @@ import { connect, Schema } from 'mongoose'
 const ObjectId = Schema.Types.ObjectId
 
 export class Database {
-  private url: string
+  private url: string | undefined
   private connectionOptions: Record<string, unknown>
   requestLogDatabaseConnection: any
 
   constructor(options: {
-    url: string
+    url: string | undefined
     connectionOptions?: Record<string, unknown>
   }) {
     const {
@@ -23,7 +23,9 @@ export class Database {
   }
 
   async connect(): Promise<void> {
-    const mongoose = await connect(this.url.toString(), this.connectionOptions)
-    console.log('Database Connected Successfully.')
+    if (this.url) {
+      const mongoose = await connect(this.url.toString(), this.connectionOptions)
+      console.log('Database Connected Successfully.')
+    }
   }
 }
