@@ -7,12 +7,16 @@ export interface IBaseModel {
 }
 
 interface Cinema extends IBaseModel {
-    seat: number
+    name: string
+    seats: number
+    seatNumber: number[]
 }
 
 const schema = new Schema<Cinema>(
     {
-        seat: { type: Number },
+        name: { type: String },
+        seats: { type: Number },
+        seatNumber: [Number],
     },
     {
         autoIndex: true,
@@ -22,7 +26,7 @@ const schema = new Schema<Cinema>(
 )
 
 export const CinemaModel = Model<Cinema>(
-    'Cinema',
+    'cinema',
     schema,
-    'Cinema'
+    'cinema'
 )
