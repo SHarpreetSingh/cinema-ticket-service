@@ -9,3 +9,6 @@ npm i
 
 ### Step 3 (dev start)
 - npm start
+
+### Before commiting to branch
+- npm run lint
